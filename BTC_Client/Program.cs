@@ -1,0 +1,28 @@
+using BTC_Client.Services;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace BTC_Client
+{
+    internal static class Program
+    {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<BtcTrackerService, BtcTrackerService>();
+            serviceCollection.AddSingleton<ExchangeRateService, ExchangeRateService>();
+            serviceCollection.AddSingleton<ApiService, ApiService>();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Main(serviceProvider));
+        }
+    }
+}
